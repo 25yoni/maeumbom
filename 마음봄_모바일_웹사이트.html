@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fffaf2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="마음봄">
+<title>마음봄 | 엄마의 마음도 돌봄이 필요하니까</title>
+<style>
+:root{
+  --lav:#9b78d4; --lav2:#eee6fb; --pink:#f8b8c8; --pink2:#fff0f4;
+  --mint:#b9ddcf; --mint2:#edf8f3; --cream:#fffaf2; --ink:#4b4560;
+  --muted:#8d879c; --line:#eee7ef; --danger:#e97878; --danger2:#fff0f0;
+}
+*{box-sizing:border-box} body{margin:0;background:#f5f1f7;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR","Malgun Gothic",sans-serif;color:var(--ink)}
+button{font:inherit;border:0;cursor:pointer}
+.app{max-width:430px;min-height:100vh;margin:auto;background:var(--cream);position:relative;box-shadow:0 0 35px #00000012}
+header{height:64px;padding:18px 20px 10px;display:flex;align-items:center;justify-content:space-between;background:#fffaf5;position:sticky;top:0;z-index:5}
+.logo{font-weight:900;color:var(--lav);font-size:22px}.small{font-size:12px;color:var(--muted)}
+main{padding:18px 18px 94px}.screen{display:none}.screen.active{display:block}
+h1{font-size:25px;margin:6px 0 7px}.sub{color:var(--muted);font-size:14px;line-height:1.6}
+.card{background:white;border:1px solid var(--line);border-radius:20px;padding:18px;margin:13px 0;box-shadow:0 5px 18px #8b6ea00a}
+.hero{background:linear-gradient(135deg,#f9edf8,#fff7ec);overflow:hidden;position:relative}
+.hero h1{font-size:28px;color:#7255a8}.flower{position:absolute;right:8px;top:8px;font-size:58px;opacity:.7}
+.pill{display:inline-block;padding:6px 10px;border-radius:99px;background:var(--lav2);color:#7458a7;font-size:12px;margin-right:5px}
+.btn{width:100%;padding:13px 15px;border-radius:14px;background:var(--lav);color:#fff;font-weight:700;margin-top:10px}
+.btn.light{background:var(--lav2);color:#7255a8}.btn.danger{background:var(--danger2);color:#c85d5d}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:430px;width:100%;height:calc(76px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:#fff;border-top:1px solid var(--line);display:flex;z-index:10}
+.nav button{flex:1;background:#fff;color:#9990a4;font-size:11px}.nav button b{display:block;font-size:21px;margin-bottom:2px}.nav button.active{color:var(--lav)}
+.moodgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.mood{background:#faf7ff;border:1px solid var(--line);border-radius:14px;padding:10px 2px;text-align:center}.mood span{font-size:25px;display:block}.mood.selected{border:2px solid var(--lav);background:var(--lav2)}
+.progress{height:8px;background:#eee7f3;border-radius:20px;overflow:hidden}.progress i{display:block;height:100%;background:var(--lav);border-radius:20px;width:60%}
+.taskgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.task{border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff;min-height:130px;text-align:left}.task.selected{border:2px solid var(--lav);background:#f8f2ff}.task .ico{font-size:30px}.task strong{display:block;margin-top:8px;font-size:14px}.task small{display:block;color:var(--muted);margin-top:4px;line-height:1.4}
+.tagrow{display:flex;gap:7px;flex-wrap:wrap}.tag{padding:8px 11px;border-radius:99px;background:#faf7fc;border:1px solid var(--line);font-size:12px}.tag.selected{background:var(--lav2);border-color:#cbb5ed;color:#7659aa}
+.input{width:100%;border:1px solid var(--line);border-radius:14px;padding:13px;background:#fff;min-height:100px;resize:vertical}
+.post{border-bottom:1px solid var(--line);padding:14px 0}.post:last-child{border:0}.post .who{font-size:12px;color:var(--muted)}.agree{float:right;border:1px solid #decdf5;background:#faf5ff;color:#7c5db0;border-radius:99px;padding:6px 9px;font-size:11px}
+.option{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;margin:8px 0;background:white}.option input{accent-color:var(--lav)}
+.alert{padding:15px;border-radius:16px;background:var(--danger2);color:#b95757;line-height:1.55;font-size:13px}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#4b4560;color:white;padding:10px 15px;border-radius:99px;font-size:12px;opacity:0;pointer-events:none;transition:.25s;z-index:20}.toast.show{opacity:1}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat div{background:#faf7ff;border-radius:16px;padding:14px}.num{font-size:23px;font-weight:800;color:#7659aa}
+.back{background:transparent;color:#7659aa;padding:0;font-size:13px}
+.choice-list label{display:block}
+.modal{position:fixed;inset:0;background:#0006;display:none;align-items:flex-end;z-index:30}.modal.open{display:flex}.sheet{background:var(--cream);width:100%;max-width:430px;margin:auto;border-radius:25px 25px 0 0;padding:22px;max-height:88vh;overflow:auto}
+@media(min-width:700px){.app{margin:25px auto;border-radius:28px;overflow:hidden}.nav{border-radius:0 0 28px 28px}}
+
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.feature{background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px;text-align:left}.feature b{display:block;margin-top:7px}.feature small{display:block;color:var(--muted);margin-top:4px;line-height:1.4}.linkrow{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.linkrow:last-child{border-bottom:0}.mini{padding:7px 10px;border-radius:10px;background:var(--lav2);color:#7255a8;font-size:11px}.checkline{display:flex;gap:10px;align-items:flex-start;padding:11px 0}.checkline input{margin-top:3px;accent-color:var(--lav)}.memo{min-height:150px}.night{background:linear-gradient(135deg,#27223b,#4b4560)!important;color:#fff}.night .sub{color:#ddd7e8}.night .card{background:#39334f;border-color:#5a536e}.night .btn.light{background:#5a536e;color:#fff}
+
+.temp-scale{display:flex;justify-content:space-between;margin-top:6px;color:var(--muted);font-size:11px}.temp-labels{display:flex;justify-content:space-between;margin-top:7px;font-size:12px;font-weight:700;color:#7659aa}.temp-labels span:last-child{text-align:right}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">🌷 마음봄</div><div class="small">엄마의 마음도 돌봄이 필요하니까</div></header>
+
+<main>
+
+<section id="splash" class="screen">
+  <div class="card hero" style="margin-top:30vh;text-align:center;padding:35px 20px">
+    <div style="font-size:58px">🌷</div><h1>마음봄</h1>
+    <p class="sub">엄마의 마음도 돌봄이 필요하니까</p>
+    <button type="button" class="btn" onclick="openScreen('home')">시작하기</button>
+    <button type="button" class="btn light" onclick="toast('로그인 화면을 준비했어요.')">로그인</button>
+  </div>
+</section>
+
+<section id="home" class="screen active">
+  <div class="card hero"><span class="pill">오늘도 수고했어요 💗</span><h1>엄마의 오늘은<br>어떤가요?</h1><p class="sub">아기 이야기만큼이나<br>엄마의 마음도 소중해요.</p><div class="flower">🌿🌷</div></div>
+  <div class="card"><b>오늘의 마음</b><p class="sub">지금 내 마음을 가볍게 기록해보세요.</p><div class="moodgrid">
+    <button type="button" class="mood" onclick="pickMood(this,'😊')"><span>😊</span>괜찮아요</button><button type="button" class="mood" onclick="pickMood(this,'🙂')"><span>🙂</span>조금 지쳐요</button><button type="button" class="mood" onclick="pickMood(this,'😟')"><span>😟</span>힘들어요</button><button type="button" class="mood" onclick="pickMood(this,'😢')"><span>😢</span>많이 힘들어요</button><button type="button" class="mood" onclick="pickMood(this,'😶')"><span>😶</span>잘 모르겠어요</button></div></div>
+  <div class="card"><b>오늘의 엄마 미션 🌱</b><p class="sub">오늘 하고 싶은 작은 돌봄을 골라보세요.</p><div class="taskgrid" id="homeTasks"></div><button type="button" class="btn light" onclick="openScreen('care')">미션 더 고르기 →</button></div>
+  <div class="card"><b>🫶 필요한 도움이 있나요?</b><p class="sub">말하기 어려운 마음도 문장으로 만들어볼 수 있어요.</p><button type="button" class="btn" onclick="openScreen('support')">도움 요청하기</button></div>
+  <div class="card" style="background:#fff2f2"><b>🚨 지금 너무 힘들어요</b><p class="sub">혼자 감당하기 어려운 순간에는 바로 도움을 받아도 괜찮아요.</p><button type="button" class="btn danger" onclick="openEmergency()">도움받기</button></div>
+</section>
+
+<section id="mind" class="screen"><h1>💗 마음</h1><p class="sub">내 마음을 살펴보고 기록해보세요.</p>
+  <div class="feature-grid"><button type="button" class="feature" onclick="openScreen('temperature')">🌡️<b>마음 온도계</b><small>0~10으로 오늘의 마음 기록</small></button><button type="button" class="feature" onclick="openScreen('diary')">📔<b>마음일기</b><small>말하지 못한 마음 기록</small></button><button type="button" class="feature" onclick="openScreen('check')">📝<b>마음 체크</b><small>현재 상태를 살펴보기</small></button><button type="button" class="feature" onclick="openScreen('mailbox')">💌<b>마음 우편함</b><small>나에게 편지 보내기</small></button></div>
+</section>
+
+<section id="check" class="screen"><button type="button" class="back" onclick="openScreen('mind')">← 마음</button><h1>📝 마음 체크</h1><p class="sub">자가점검은 진단이 아니라 현재 마음 상태를 살펴보는 데 도움을 줘요.</p><div class="card"><div class="progress"><i style="width:40%"></i></div><p class="small">오늘의 체크 4/10</p><div id="checkQs"></div><button type="button" class="btn" onclick="toast('마음 체크 기록을 저장했어요.')">체크 결과 저장하기</button></div></section>
+
+<section id="temperature" class="screen"><button type="button" class="back" onclick="openScreen('mind')">← 마음</button><h1>🌡️ 마음 온도계</h1><div class="card"><b>오늘 내 마음은 몇 도인가요?</b><div style="font-size:38px;margin:16px 0;color:#7659aa"><span id="tempVal">5</span>°</div><input id="tempRange" type="range" min="0" max="10" value="5" style="width:100%" oninput="updateTemperature(this.value)"><div class="temp-scale"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div><div class="temp-labels"><span>0° 매우 힘든 상태</span><span>10° 편안한 상태</span></div><div id="tempStatus" class="temp-status">5° · 보통이에요</div><p class="sub">숫자를 움직일 때마다 현재 마음 상태가 표시돼요.</p></div><div class="card"><b>이번 주 마음 온도</b><div style="height:110px;margin-top:15px;display:flex;align-items:end;gap:8px"><span style="height:35%;flex:1;background:#e5d8f7;border-radius:8px"></span><span style="height:60%;flex:1;background:#e5d8f7;border-radius:8px"></span><span style="height:48%;flex:1;background:#e5d8f7;border-radius:8px"></span><span style="height:72%;flex:1;background:#cdb4eb;border-radius:8px"></span><span style="height:55%;flex:1;background:#cdb4eb;border-radius:8px"></span><span style="height:68%;flex:1;background:#e5d8f7;border-radius:8px"></span><span style="height:45%;flex:1;background:#e5d8f7;border-radius:8px"></span></div><p class="small">월 · 화 · 수 · 목 · 금 · 토 · 일</p></div></section>
+
+<section id="diary" class="screen"><button type="button" class="back" onclick="openScreen('mind')">← 마음</button><h1>📔 마음일기</h1><p class="sub">오늘의 마음을 있는 그대로 적어보세요.</p><div class="card"><textarea id="diaryText" class="input" placeholder="오늘 어떤 감정을 느꼈나요?"></textarea><button type="button" class="btn" onclick="saveText('diaryText','오늘의 마음을 저장했어요 💗')">저장하기</button></div></section>
+
+<section id="mailbox" class="screen"><button type="button" class="back" onclick="openScreen('mind')">← 마음</button><h1>💌 마음 우편함</h1><p class="sub">말하지 못했던 마음을 나에게 안전하게 적어보세요.</p><div class="card"><textarea id="letterText" class="input" placeholder="미래의 나에게, 오늘의 나에게 하고 싶은 말을 적어보세요."></textarea><button type="button" class="btn" onclick="saveText('letterText','마음 우편함에 넣어두었어요 💌')">마음 보내기</button></div><div class="card"><b>내가 받은 마음</b><p class="sub">“오늘도 여기까지 온 것만으로 충분해.”</p></div></section>
+
+<section id="community" class="screen"><h1>🫂 커뮤니티</h1><p class="sub">익명으로 편하게 이야기하고 서로의 마음에 공감해요.</p><div class="tagrow"><span class="tag selected" onclick="selectTag(this)">전체</span><span class="tag" onclick="selectTag(this)">육아</span><span class="tag" onclick="selectTag(this)">부부</span><span class="tag" onclick="selectTag(this)">수면</span><span class="tag" onclick="selectTag(this)">감정</span></div><div class="card"><div class="post"><span class="who">익명엄마27</span><button type="button" class="agree" onclick="agree(this)">나도 그래요</button><p>오늘 아기가 계속 울어서 저도 같이 울 것 같았어요.</p></div><div class="post"><span class="who">익명엄마15</span><button type="button" class="agree" onclick="agree(this)">나도 그래요</button><p>잠이 너무 부족하니까 사소한 일에도 마음이 무너져요.</p></div><div class="post"><span class="who">익명엄마32</span><button type="button" class="agree" onclick="agree(this)">나도 그래요</button><p>나만 이런가 했는데 비슷한 이야기가 있어서 위로됐어요.</p></div><button type="button" class="btn" onclick="toast('익명 글쓰기 화면을 열었어요.')">✎ 글쓰기</button></div></section>
+
+<section id="care" class="screen"><h1>🌱 오늘의 엄마 미션</h1><p class="sub">정답은 없어요. 오늘 내 마음에 맞는 미션을 <b>여러 개</b> 골라보세요.</p><div class="tagrow" style="margin:15px 0"><span class="tag selected" onclick="selectTag(this)">전체</span><span class="tag" onclick="selectTag(this)">마음</span><span class="tag" onclick="selectTag(this)">휴식</span><span class="tag" onclick="selectTag(this)">활동</span><span class="tag" onclick="selectTag(this)">환경</span></div><div class="taskgrid" id="allTasks"></div><div class="card"><b><span id="selectedCount">0</span>개 선택했어요 🌷</b><button type="button" class="btn" onclick="completeTasks()">오늘의 미션으로 저장하기</button></div></section>
+
+<section id="support" class="screen"><h1>🫶 도움 요청하기</h1><p class="sub">도움이 필요하다고 말하기 어려울 때, 문장을 함께 만들어드려요.</p><div class="card"><b>지금 내가 필요한 도움은?</b><div class="choice-list"><label class="option"><input type="checkbox" value="아기를 잠깐 봐주세요"> 아기를 잠깐 봐주세요</label><label class="option"><input type="checkbox" value="밥을 챙겨주세요"> 밥을 챙겨주세요</label><label class="option"><input type="checkbox" value="집안일을 대신해주세요"> 집안일을 대신해주세요</label><label class="option"><input type="checkbox" value="내 이야기를 들어주세요"> 내 이야기를 들어주세요</label><label class="option"><input type="checkbox" value="병원에 같이 가주세요"> 병원에 같이 가주세요</label><label class="option"><input type="checkbox" value="그냥 옆에 있어주세요"> 그냥 옆에 있어주세요</label></div><button type="button" class="btn" onclick="makeRequest()">도움 요청 문장 만들기</button></div><div class="card"><b>👥 나의 도움망</b><p class="sub">필요할 때 연락할 사람을 미리 정해두세요.</p><button type="button" class="btn light" onclick="openScreen('network')">도움망 관리하기 →</button></div></section>
+
+<section id="network" class="screen"><button type="button" class="back" onclick="openScreen('support')">← 도움 요청</button><h1>👥 나의 도움망</h1><p class="sub">내가 도움을 요청할 수 있는 사람을 정리해두어요.</p><div class="card"><div class="linkrow"><div><b>배우자</b><div class="small">가장 먼저 연락할 사람</div></div><button type="button" class="mini" onclick="toast('연락 방법을 설정했어요.')">설정</button></div><div class="linkrow"><div><b>가족</b><div class="small">함께 이야기할 수 있는 사람</div></div><button type="button" class="mini" onclick="toast('연락 방법을 설정했어요.')">설정</button></div><div class="linkrow"><div><b>친구</b><div class="small">내 이야기를 들어줄 사람</div></div><button type="button" class="mini" onclick="toast('연락 방법을 설정했어요.')">설정</button></div><button type="button" class="btn light" onclick="toast('도움망에 사람을 추가할 수 있어요.')">+ 사람 추가하기</button></div></section>
+
+<section id="spouse" class="screen"><button type="button" class="back" onclick="openScreen('more')">← 더보기</button><h1>👨‍👩‍👧 배우자 미션</h1><p class="sub">엄마의 마음을 이해하고 실제로 도와주는 작은 행동이에요.</p><div class="card"><label class="checkline"><input type="checkbox"> 오늘 30분 동안 아기 돌보기</label><label class="checkline"><input type="checkbox"> 엄마의 이야기를 10분 동안 들어주기</label><label class="checkline"><input type="checkbox"> 식사나 간식 챙겨주기</label><label class="checkline"><input type="checkbox"> 집안일 하나 대신하기</label><button type="button" class="btn" onclick="toast('배우자 미션을 저장했어요 💗')">오늘의 미션 저장</button></div></section>
+
+<section id="help" class="screen"><button type="button" class="back" onclick="openScreen('more')">← 더보기</button><h1>🏥 도움받기</h1><p class="sub">혼자 해결하려 하기보다 필요한 도움을 받을 수 있어요.</p><div class="card"><b>전문적인 도움이 필요할 때</b><p class="sub">정신건강의학과, 산부인과 등 의료진과 상담할 수 있어요.</p><button type="button" class="btn light" onclick="toast('전문기관 정보 화면을 준비했어요.')">전문기관 안내</button></div><div class="card"><b>🏥 제주보건소</b><p class="sub">임산부·산모 건강 관련 상담과 보건 서비스를 확인할 수 있어요.</p><p class="small">📞 064-728-4010<br>📍 제주특별자치도 제주시 연삼로 264</p><button type="button" class="btn light" onclick="openExternal('https://map.kakao.com/?q=제주보건소')">위치 확인하기</button></div><div class="card"><b>💜 제주시정신건강복지센터</b><p class="sub">정신건강 상담 및 프로그램을 이용할 수 있어요.</p><p class="small">📞 064-728-4074<br>📍 제주시 노형9길 9-4, 2층</p></div><div class="card" style="background:#fff7fb"><b>☎️ 여성긴급전화 1366 제주센터</b><p class="sub">가정폭력·성폭력·스토킹·교제폭력·디지털성범죄 등 위기 상황에서 365일 24시간 긴급상담과 보호·연계를 받을 수 있어요.</p><p class="small">📞 064-1366 (24시간)<br>📍 제주특별자치도 제주시 서해안로 192</p><button type="button" class="btn" onclick="window.location.href='tel:0641366'">1366 전화하기</button><button type="button" class="btn light" onclick="openExternal('https://map.kakao.com/?q=여성긴급전화1366 제주센터')">위치 확인하기</button></div><div class="card"><b>병원 방문이 걱정될 때</b><p class="sub">진료 전에 궁금한 점과 전달할 내용을 미리 적어보세요.</p><button type="button" class="btn" onclick="openScreen('hospital')">병원 가기 전 메모 →</button></div></section>
+
+<section id="hospital" class="screen"><button type="button" class="back" onclick="openScreen('help')">← 도움받기</button><h1>🏥 병원 가기 전 메모</h1><p class="sub">의료진에게 이야기하고 싶은 내용을 미리 정리해보세요.</p><div class="card"><textarea id="hospitalText" class="input memo" placeholder="예: 언제부터 힘들었는지
+수면이나 식사는 어떤지
+걱정되는 생각이 있는지
+궁금한 점은 무엇인지"></textarea><button type="button" class="btn" onclick="saveText('hospitalText','병원 방문 전 메모를 저장했어요.')">메모 저장하기</button></div></section>
+
+<section id="dawn" class="screen"><button type="button" class="back" onclick="openScreen('more')">← 더보기</button><div class="card night"><h1>🌙 새벽 모드</h1><p class="sub">잠이 오지 않는 새벽에도 최소한의 기능으로 마음을 돌봐요.</p><div class="card"><b>지금 3분만 쉬어볼까요?</b><p class="sub">천천히 숨을 들이마시고 내쉬며 지금의 몸과 마음을 살펴보세요.</p><button type="button" class="btn light" onclick="toast('3분 마음 쉬기를 시작했어요 🌙')">3분 마음 쉬기</button></div><button type="button" class="btn light" onclick="openEmergency()">너무 힘들어요</button></div></section>
+
+<section id="review" class="screen"><h1>📊 돌아보기</h1><p class="sub">이번 주의 마음과 나를 돌본 기록을 한눈에 봐요.</p><div class="card"><div class="stat"><div><span class="small">평균 마음 온도</span><div class="num">5.8° ↗</div></div><div><span class="small">평균 수면</span><div class="num">4.5시간</div></div></div></div><div class="card"><b>이번 주 마음 변화</b><div style="height:110px;margin-top:15px;display:flex;align-items:end;gap:8px"><span style="height:45%;flex:1;background:#e5d8f7;border-radius:8px"></span><span style="height:62%;flex:1;background:#e5d8f7;border-radius:8px"></span><span style="height:52%;flex:1;background:#e5d8f7;border-radius:8px"></span><span style="height:76%;flex:1;background:#e5d8f7;border-radius:8px"></span><span style="height:60%;flex:1;background:#e5d8f7;border-radius:8px"></span><span style="height:82%;flex:1;background:#cdb4eb;border-radius:8px"></span><span style="height:68%;flex:1;background:#cdb4eb;border-radius:8px"></span></div><div class="small">월 · 화 · 수 · 목 · 금 · 토 · 일</div></div><div class="card"><b>🌱 내가 해낸 미션</b><p class="sub">이번 주 7개의 작은 돌봄을 실천했어요.</p><div class="progress"><i style="width:70%"></i></div></div></section>
+
+<section id="tasks" class="screen"><button type="button" class="back" onclick="openScreen('care')">← 돌봄</button><h1>🌱 엄마 미션 목록</h1><p class="sub">오늘뿐 아니라 필요할 때 골라서 실천해보세요.</p><div class="taskgrid" id="taskList"></div></section>
+
+<section id="more" class="screen"><h1>✨ 더보기</h1><div class="feature-grid"><button type="button" class="feature" onclick="openScreen('mailbox')">💌<b>마음 우편함</b><small>말하지 못한 마음 적기</small></button><button type="button" class="feature" onclick="openScreen('network')">👥<b>나의 도움망</b><small>도움받을 사람 정리</small></button><button type="button" class="feature" onclick="openScreen('spouse')">👨‍👩‍👧<b>배우자 미션</b><small>함께하는 돌봄</small></button><button type="button" class="feature" onclick="openScreen('dawn')">🌙<b>새벽 모드</b><small>잠이 오지 않는 새벽</small></button><button type="button" class="feature" onclick="openScreen('help')">🏥<b>도움받기</b><small>전문적인 도움 연결</small></button><button type="button" class="feature" onclick="openScreen('hospital')">📝<b>병원 가기 전 메모</b><small>진료 전 내용 정리</small></button><button type="button" class="feature" onclick="openScreen('tasks')">🌱<b>엄마 미션 목록</b><small>전체 미션 보기</small></button><button type="button" class="feature" onclick="openScreen('my')">👤<b>마이</b><small>나의 기록과 설정</small></button></div></section>
+
+<section id="my" class="screen"><h1>👤 마이</h1><p class="sub">마음봄에서 나를 돌본 기록을 확인해보세요.</p><div class="card"><div class="linkrow"><b>나의 마음 기록</b><button type="button" class="mini" onclick="openScreen('review')">보기</button></div><div class="linkrow"><b>나의 미션 기록</b><button type="button" class="mini" onclick="openScreen('tasks')">보기</button></div><div class="linkrow"><b>도움망 설정</b><button type="button" class="mini" onclick="openScreen('network')">설정</button></div><div class="linkrow"><b>알림 설정</b><button type="button" class="mini" onclick="toast('알림 설정을 준비했어요.')">설정</button></div></div></section>
+</main>
+
+<nav class="nav"><button type="button" class="active" onclick="nav(this,'home')"><b>⌂</b>홈</button><button type="button" onclick="nav(this,'mind')"><b>♡</b>마음</button><button type="button" onclick="nav(this,'community')"><b>☷</b>커뮤니티</button><button type="button" onclick="nav(this,'care')"><b>🌱</b>돌봄</button><button type="button" onclick="nav(this,'review')"><b>◔</b>돌아보기</button></nav>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+
+<script>
+const tasks=[['🪟','창문 열고 환기시키기','5분','환경'],['🚶‍♀️','하루 5분 산책하기','5분','활동'],['🌷','집에 좋아하는 것 놓기','작은 변화','환경'],['☕','따뜻한 차 한 잔 마시기','천천히','휴식'],['🎵','좋아하는 노래 한 곡 듣기','3~5분','마음'],['🛋️','10분 동안 아무것도 하지 않기','10분','휴식'],['💌','고마운 사람에게 메시지 보내기','1분','마음'],['🌤️','햇빛을 잠깐 쬐기','5분','활동'],['🧴','좋아하는 향 맡기','1분','환경'],['📖','좋아하는 글 한 쪽 읽기','5분','마음']];
+let selected=new Set();
+function taskHTML(t,i){return `<button type="button" class="task ${selected.has(i)?'selected':''}" onclick="toggleTask(${i})"><div class="ico">${t[0]}</div><strong>${t[1]}</strong><small>${t[2]}</small></button>`}
+function renderTasks(){document.getElementById('allTasks').innerHTML=tasks.map(taskHTML).join('');document.getElementById('homeTasks').innerHTML=tasks.slice(0,4).map(taskHTML).join('');document.getElementById('taskList').innerHTML=tasks.map(taskHTML).join('');document.getElementById('selectedCount').textContent=selected.size}
+function toggleTask(i){selected.has(i)?selected.delete(i):selected.add(i);renderTasks()}
+function completeTasks(){toast(selected.size?`${selected.size}개의 미션을 오늘의 미션으로 저장했어요 🌱`:'미션을 하나 이상 골라주세요.')}
+function pickMood(el,m){document.querySelectorAll('.mood').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');toast(`${m} 오늘의 마음을 기록했어요`)}
+function nav(el,id){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));el.classList.add('active');openScreen(id)}
+function openScreen(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function agree(btn){btn.textContent=btn.textContent==='나도 그래요'?'공감했어요 💗':'나도 그래요'}
+function saveText(id,msg){const v=document.getElementById(id).value.trim();if(!v){toast('내용을 한 줄이라도 적어주세요.');return}toast(msg)}
+function updateTemperature(v){const n=Number(v);document.getElementById('tempVal').textContent=n;const status=n<=1?'매우 힘든 상태예요':n<=3?'많이 힘들어요':n<=5?'조금 지치거나 힘들어요':n<=7?'괜찮아요':n<=9?'편안한 편이에요':'편안한 상태예요';document.getElementById('tempStatus').textContent=`${n}° · ${status}`}
+function selectTag(el){el.parentElement.querySelectorAll('.tag').forEach(x=>x.classList.remove('selected'));el.classList.add('selected')}
+function selectEmergency(el){el.parentElement.querySelectorAll('.emergency-option').forEach(x=>x.classList.remove('selected'));el.classList.add('selected')}
+function makeRequest(){const vals=[...document.querySelectorAll('#support input:checked')].map(x=>x.value);if(!vals.length){toast('필요한 도움을 하나 골라주세요.');return}const main=vals[0];const text=main==='내 이야기를 들어주세요'?'요즘 제가 조금 힘들어서요. 오늘 제 이야기를 조금만 들어주실 수 있을까요?':`요즘 제가 조금 힘들어서요. ${main} 가능할까요?`;sheet.innerHTML=`<h2>💌 도움 요청 문장</h2><p class="sub">필요한 마음을 상대에게 전해보세요.</p><div class="card"><b>${text}</b></div><button type="button" class="btn" onclick="copyText(${JSON.stringify(text)})">문장 복사하기</button><button type="button" class="btn light" onclick="closeModal()">닫기</button>`;modal.classList.add('open')}
+function copyText(text){navigator.clipboard?.writeText(text);closeModal();toast('문장을 복사했어요 💗')}
+function openEmergency(){sheet.innerHTML=`<h2 style="color:#c85d5d">🚨 지금 너무 힘들어요</h2><div class="alert"><b>혼자 감당하지 않아도 괜찮아요.</b><br>자신이나 아기에게 해를 끼칠 것 같은 생각이 들거나 즉각적인 위험이 있다면 혼자 있지 말고 주변 사람과 의료진에게 바로 알려주세요.</div><div class="card"><b>지금 어떤 상황인가요?</b><label class="option emergency-option" onclick="selectEmergency(this)">🔴 나를 해치고 싶은 생각이 들어요</label><label class="option emergency-option" onclick="selectEmergency(this)">🔴 아기에게 해를 끼칠 것 같은 생각이 들어요</label><label class="option emergency-option" onclick="selectEmergency(this)">🟠 너무 불안하고 혼자 감당하기 어려워요</label><label class="option emergency-option" onclick="selectEmergency(this)">🟢 누군가와 이야기하고 싶어요</label></div><div class="card" style="background:#fff7fb"><b>☎️ 바로 연락할 수 있는 도움</b><p class="sub">위기 상황에서는 혼자 있지 말고 가까운 사람이나 의료진에게 알려주세요.</p><p class="small"><b>여성긴급전화 1366 제주센터</b><br>📞 064-1366 · 365일 24시간<br>📍 제주시 서해안로 192</p><button type="button" class="btn" onclick="window.location.href='tel:0641366'">1366 전화하기</button><button type="button" class="btn light" onclick="window.location.href='tel:119'">119 응급전화</button></div><button type="button" class="btn danger" onclick="toast('가까운 사람·의료진에게 바로 알려주세요.');closeModal()">도움받기 안내 확인</button><button type="button" class="btn light" onclick="closeModal()">닫기</button>`;modal.classList.add('open')}
+function closeModal(){modal.classList.remove('open')}
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()})
+updateTemperature(document.getElementById('tempRange').value);
+document.getElementById('checkQs').innerHTML=['최근 기분이 가라앉거나 우울하게 느껴졌나요?','평소 즐기던 일에 흥미가 줄었나요?','불안하거나 걱정되는 마음이 많았나요?','잠을 충분히 자도 피곤하게 느껴졌나요?'].map((q,i)=>`<label class="option"><input type="checkbox"> ${i+1}. ${q}</label>`).join('');
+renderTasks();
+/* 마음봄 모바일 웹앱: 브라우저 로컬 저장 기능 */
+const MB_STORE = 'maeumbom_v1';
+function mbLoad(){
+  try { return JSON.parse(localStorage.getItem(MB_STORE) || '{}'); }
+  catch(e){ return {}; }
+}
+function mbSave(data){
+  try { localStorage.setItem(MB_STORE, JSON.stringify(data)); return true; }
+  catch(e){ return false; }
+}
+function mbSet(key,value){
+  const data = mbLoad(); data[key]=value; mbSave(data);
+}
+function mbGet(key, fallback){
+  const data=mbLoad(); return data[key] ?? fallback;
+}
+
+/* 마음 기록 */
+const originalPickMood = pickMood;
+pickMood = function(el,m){
+  originalPickMood(el,m);
+  mbSet('mood', {emoji:m, text:el.textContent.trim(), date:new Date().toISOString()});
+};
+
+/* 온도 기록 */
+const originalUpdateTemperature = updateTemperature;
+updateTemperature = function(v){
+  originalUpdateTemperature(v);
+  mbSet('temperature', {value:Number(v), date:new Date().toISOString()});
+};
+
+/* 일기/메모 저장: 기존 동작 + 실제 브라우저 저장 */
+const originalSaveText = saveText;
+saveText = function(id,msg){
+  const el=document.getElementById(id);
+  if(!el || !el.value.trim()){ originalSaveText(id,msg); return; }
+  mbSet(id, {text:el.value, date:new Date().toISOString()});
+  toast(msg);
+};
+
+/* 클립보드: iOS/Safari에서도 가능한 방식 우선 사용 */
+async function copyText(text){
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+    }else{
+      const ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.opacity='0';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      document.execCommand('copy');
+      ta.remove();
+    }
+    closeModal();
+    toast('문장을 복사했어요 💗');
+  }catch(e){
+    closeModal();
+    toast('복사가 제한됐어요. 문장을 길게 눌러 복사해주세요.');
+  }
+}
+
+/* 저장된 내용 복원 */
+window.addEventListener('DOMContentLoaded', ()=>{
+  const diary=mbGet('diaryText',null);
+  const hospital=mbGet('hospitalText',null);
+  if(diary?.text) document.getElementById('diaryText').value=diary.text;
+  if(hospital?.text) document.getElementById('hospitalText').value=hospital.text;
+
+  const temp=mbGet('temperature',null);
+  if(temp){
+    const range=document.getElementById('tempRange');
+    range.value=temp.value;
+    originalUpdateTemperature(temp.value);
+  }
+
+  const mood=mbGet('mood',null);
+  if(mood){
+    document.querySelectorAll('.mood').forEach(btn=>{
+      if(btn.textContent.includes(mood.emoji)) btn.classList.add('selected');
+    });
+  }
+});
+
+/* 링크/전화 동작을 현재 브라우저에서 확실하게 실행 */
+function openExternal(url){
+  window.location.href=url;
+}
+
+</script>
+</body>
+</html>
